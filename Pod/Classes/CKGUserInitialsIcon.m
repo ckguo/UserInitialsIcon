@@ -24,12 +24,18 @@ static NSArray *colors = nil;
         return nil;
     }
     name = name.length > 0 ? name : identifier;
-    NSArray *words = [name componentsSeparatedByString:@" "];
+    NSMutableArray *words = [[name componentsSeparatedByString:@" "] mutableCopy];
     NSString *initials = [(NSString *)words[0] substringToIndex:1];
     initials = initials.capitalizedString;
     if ([words count] > 1) {
-        NSString *second_initial = [(NSString *)words[1] substringToIndex:1];
-        initials = [initials stringByAppendingString:second_initial];
+		
+		[self removeBlankStringsFromArray:words];
+		
+		if (words.count > 0 && ((NSString*)words[1]).length > 0) {
+			NSString *second_initial = [(NSString *)words[1] substringToIndex:1];
+			initials = [initials stringByAppendingString:second_initial];
+		}
+		
     }
     NSString *key = [NSString stringWithFormat:@"%@:%.1f:(%.1f,%.1f):%ld", initials, fontSize, imageSize.width, imageSize.height, (long)identifier.hash];
     
@@ -43,6 +49,17 @@ static NSArray *colors = nil;
     }
     
     return image;
+}
+
++ (void) removeBlankStringsFromArray:(NSMutableArray*)array
+{
+	if ([array[1] isEqualToString:@""] || [array[1] isEqualToString:@" "]) {
+		[array removeObjectAtIndex:1];
+	}
+	
+	if (((NSString*)array[1]).length < 1) {
+		[self removeBlankStringsFromArray:array];
+	}
 }
 
 + (NSCache *)imageCache {
