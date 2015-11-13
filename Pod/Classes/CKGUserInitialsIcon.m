@@ -36,7 +36,7 @@ static NSArray *colors = nil;
     UIImage *image = [self.imageCache objectForKey:key];
     if (!image) {
         CKGUserInitialsIcon *icon = [self iconWithCode:initials size:fontSize];
-        icon.drawingBackgroundColor = [HXColor colorWithHexString:self.colors[identifier.hash%self.colors.count]];
+        icon.drawingBackgroundColor = [HXColor hx_colorWithHexString:self.colors[identifier.hash%self.colors.count]];
         [icon addAttribute:NSForegroundColorAttributeName value: [UIColor whiteColor]];
         image = [icon imageWithSize:imageSize];
         [self.imageCache setObject:image forKey:key];
