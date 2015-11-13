@@ -8,7 +8,7 @@
 
 #import "CKGUserInitialsIcon.h"
 
-#import <HexColors/HexColor.h>
+#import <HexColors/HexColors.h>
 
 static NSCache *imageCache = nil;
 static NSArray *colors = nil;
